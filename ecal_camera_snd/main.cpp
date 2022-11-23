@@ -31,16 +31,25 @@
 #include "compressed_image.pb.h"
 
 int main(int argc, char **argv) {
+  constexpr const char* usage_string = "[topicName] "
+                                       "[cameraName] [OPTIONAL_resolutionWidth] "
+                                       "[OPTIONAL_resolutionHeight] [OPTIONAL_maxFps]";
+
   if (argc == 2 && strcmp(argv[1], "--help") == 0) {
     std::cout << "eCAL Camera Sender \n\n";
-    std::cout << "Example usage: argv[0] compressed_image_protobuf "
-                 "/dev/video0 640 480 10 \n\n";
+    std::cout << "Usage:\n";
+    std::cout << "  " << argv[0] << " " << usage_string << "\n\n";
+    std::cout << "Example usage: \n"
+              << "  " << argv[0] << "compressed_image_protobuf /dev/video0 640 480 10 \n\n";
     std::cout << "Command Line Arguments: \n\n";
-    std::cout << "Topic: Name of the topic";
-    std::cout << "Camera: Path to camera. Run \"argv[0] --list-cameras\" to list available cameras. \n";
-    std::cout << "Width: Image width (optional) \n";
-    std::cout << "Height: Image height (optional) \n";
-    std::cout << "Framerate: Maximal framerate (optional)\n";
+    std::cout << "  topicName:        Name of the eCAL Topic to publish to\n";
+    std::cout << "  cameraName:       Path to camera. Call --list-cameras to list available cameras. \n";
+    std::cout << "  resolutionWidth:  Image width (optional) \n";
+    std::cout << "  resolutionHeight: Image height (optional) \n";
+    std::cout << "  maxFps:           Maximal framerate (optional)\n";
+    std::cout << std::endl;
+    std::cout << "  --help:           Print this help\n";
+    std::cout << "  --list-cameras:   List all available cameras\n";
 
     return 0;
   }
@@ -59,9 +68,16 @@ int main(int argc, char **argv) {
   }
 
   if (argc < 3) {
-    std::cerr << "Invalid parameters, usage: argv[0] [topicName] "
-                 "[cameraName] [OPTIONAL_resolutionWidth] "
-                 "[OPTIONAL_resolutionHeight] [OPTIONAL_maxFps]"
+    std::cerr << "Invalid parameters, usage: " << std::endl << std::endl;
+    std::cerr <<  "  " << argv[0] << " " << usage_string
+              << std::endl
+              << std::endl;
+    std::cerr << "Get more help with:" << std::endl
+              << "  " << argv[0] << " --help"
+              << std::endl
+              << std::endl;
+    std::cerr << "List available cameras with:" << std::endl
+              << "  " << argv[0] << " --list-cameras"
               << std::endl;
     return 0;
   } else {
